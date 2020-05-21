@@ -1,12 +1,13 @@
-import fs from 'fs';
-import path from 'path';
+import 'reflect-metadata';
+
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
-import uploadConfig from '@config/upload';
 
 import User from '../infra/typeorm/entities/User';
+
 import IUsersRepository from '../repositories/IUsers';
+import IStorageProvider from '@shared/providers/storage/models/IStorageProvider';
 
 interface Request {
   user_id: string;
@@ -18,6 +19,9 @@ class UpdateUserAvatarService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+
+    @inject('StorageProvider')
+    private storageProvider: IStorageProvider,
   ) {}
 
   public async execute({ user_id, filename }: Request): Promise<User> {
@@ -28,15 +32,12 @@ class UpdateUserAvatarService {
     }
 
     if (user.avatar) {
-      const avatarFilePath = path.join(uploadConfig.directory, user.avatar);
-      const avatarFileExists = await fs.promises.stat(avatarFilePath);
-
-      if (avatarFileExists) {
-        await fs.promises.unlink(avatarFilePath);
-      }
+      await this.storageProvider.deleteFile(user.avatar);
     }
 
-    user.avatar = filename;
+    const newAvatar = await this.storageProvider.saveFile(filename);
+
+    user.avatar = newAvatar;
 
     await this.usersRepository.save(user);
 
