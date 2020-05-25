@@ -1,4 +1,4 @@
-import FakeUsersRepository from '../repositories/fake/users';
+import FakeUsersRepository from '../repositories/fakes/Users';
 import FakeHashProvider from '../providers/hash/fakes/FakeHashProvider';
 
 import AuthenticateUserService from './AuthenticateUser';
@@ -6,7 +6,7 @@ import CreateUserService from './CreateUser';
 
 import AppError from '@shared/errors/AppError';
 
-describe('CreateUser', () => {
+describe('AuthenticateUser', () => {
   it('should be able to authenticate an user', async () => {
     const fakeUsersRepository = new FakeUsersRepository();
     const fakeHashProvider = new FakeHashProvider();
@@ -45,7 +45,7 @@ describe('CreateUser', () => {
       fakeHashProvider,
     );
 
-    expect(
+    await expect(
       authenticateUser.execute({
         email: 'joaodasilva@example.com',
         password: '123456',
@@ -73,7 +73,7 @@ describe('CreateUser', () => {
       password: '123456',
     });
 
-    expect(
+    await expect(
       authenticateUser.execute({
         email: 'joaodasilva@example.com',
         password: '123',

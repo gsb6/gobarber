@@ -1,4 +1,4 @@
-import FakeUsersRepository from '../repositories/fake/users';
+import FakeUsersRepository from '../repositories/fakes/Users';
 import FakeHashProvider from '../providers/hash/fakes/FakeHashProvider';
 
 import CreateUserService from '../services/CreateUser';
@@ -39,7 +39,7 @@ describe('CreateUser', () => {
       password: '123456',
     });
 
-    expect(
+    await expect(
       createUser.execute({
         name: 'João da Silva',
         email: 'joaodasilva@example.com',
