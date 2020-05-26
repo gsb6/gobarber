@@ -7,7 +7,7 @@ import IAppointmentsRepository from '@modules/appointments/repositories/IAppoint
 import AppointmentsRepository from '@modules/appointments/infra/typeorm/repositories/appointments';
 
 import IUsersRepository from '@modules/users/repositories/IUsers';
-import UsersRepository from '@modules/users/infra/typeorm/repositories/users';
+import UsersRepository from '@modules/users/infra/typeorm/repositories/Users';
 
 import IUsersTokensRepository from '@modules/users/repositories/IUsersTokens';
 // import UsersRepository from '@modules/users/infra/typeorm/repositories/users';
