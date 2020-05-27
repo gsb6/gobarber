@@ -31,9 +31,16 @@ class RecoverPasswordEmailService {
       throw new AppError('User dos not exists.');
     }
 
-    await this.usersTokensRepository.generate(user.id);
+    const { token: newToken } = await this.usersTokensRepository.generate(
+      user.id,
+    );
 
-    this.mailProvider.sendMail(email, 'Recuperação de senha');
+    console.log(newToken);
+
+    await this.mailProvider.sendMail(
+      email,
+      `Pedido de recuperação de senha: ${newToken}`,
+    );
   }
 }
 
