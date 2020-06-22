@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { startOfHour } from 'date-fns';
+import { startOfHour, isBefore, getHours } from 'date-fns';
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
@@ -9,6 +9,7 @@ import IAppointmentsRepository from '../repositories/IAppointments';
 
 interface IRequest {
   provider_id: string;
+  user_id: string;
   date: Date;
 }
 
@@ -19,8 +20,26 @@ class CreateAppointmentService {
     private appointmentsRepository: IAppointmentsRepository,
   ) {}
 
-  public async execute({ provider_id, date }: IRequest): Promise<Appointment> {
+  public async execute({
+    provider_id,
+    user_id,
+    date,
+  }: IRequest): Promise<Appointment> {
     const parsedDate = startOfHour(date);
+
+    if (isBefore(parsedDate, Date.now())) {
+      throw new AppError("You can't create an appointment on past date.");
+    }
+
+    if (user_id === provider_id) {
+      throw new AppError("You can't create an appointment for yourself.");
+    }
+
+    if (getHours(parsedDate) < 8 || getHours(parsedDate) > 17) {
+      throw new AppError(
+        "You can't create an appointment before 8am or after 5pm",
+      );
+    }
 
     const findSameDate = await this.appointmentsRepository.findByDate(
       parsedDate,
@@ -32,6 +51,7 @@ class CreateAppointmentService {
 
     const appointment = await this.appointmentsRepository.create({
       provider_id,
+      user_id,
       date: parsedDate,
     });
 
