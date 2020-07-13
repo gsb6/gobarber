@@ -80,7 +80,7 @@ describe('UpdateProfile', () => {
       user_id: newUser.id,
       name: 'Gabriel de Salles',
       email: 'gabriel.salles@gmail.com',
-      oldPassword: '123456',
+      old_password: '123456',
       password: '123123',
     });
 
@@ -117,7 +117,7 @@ describe('UpdateProfile', () => {
         user_id: newUser.id,
         name: 'Gabriel de Salles',
         email: 'gabriel.salles@gmail.com',
-        oldPassword: 'wrong old password',
+        old_password: 'wrong old password',
         password: '123123',
       }),
     ).rejects.toBeInstanceOf(AppError);
