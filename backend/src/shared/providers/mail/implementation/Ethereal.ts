@@ -6,11 +6,6 @@ import ISendMailDTO from '../dtos/ISendMail';
 
 import IMailTemplateProvider from '@shared/providers/mailTemplate/models/IMailTemplateProvider';
 
-interface IMessage {
-  to: string;
-  body: string;
-}
-
 @injectable()
 export default class EtherealMailProvider implements IMailProvider {
   private client: Transporter;
