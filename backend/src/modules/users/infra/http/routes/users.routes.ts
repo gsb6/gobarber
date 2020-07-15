@@ -10,7 +10,7 @@ import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import { celebrate, Segments, Joi } from 'celebrate';
 
 const usersRouter = Router();
-const upload = multer(uploadConfig);
+const upload = multer(uploadConfig.multer);
 const usersController = new UsersController();
 const avatarController = new AvatarController();
 
