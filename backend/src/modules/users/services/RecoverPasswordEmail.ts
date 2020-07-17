@@ -3,7 +3,7 @@ import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 
-import IMailProvider from '@shared/providers/mail/models/IMailProvider';
+import IMailProvider from '@shared/container/providers/Mail/models/IMailProvider';
 
 import IUsersRepository from '../repositories/IUsers';
 import IUsersTokensRepository from '../repositories/IUsersTokens';

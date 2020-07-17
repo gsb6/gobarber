@@ -4,8 +4,8 @@ import mailConfig from '@config/mail';
 
 import IMailProvider from './models/IMailProvider';
 
-import EtherealMailProvider from './implementation/Ethereal';
-import SESMailProvider from './implementation/SES';
+import EtherealMailProvider from './implementations/Ethereal';
+import SESMailProvider from './implementations/SES';
 
 const providers = {
   ethereal: container.resolve(EtherealMailProvider),

@@ -1,9 +1,10 @@
 import 'reflect-metadata';
 import { injectable, inject } from 'tsyringe';
-import { getDaysInMonth, getDate } from 'date-fns';
 
 import Appointment from '../infra/typeorm/entities/Appointment';
+
 import IAppointmentsRepository from '../repositories/IAppointments';
+import ICacheProvider from '@shared/container/providers/Cache/models/ICacheProvider';
 
 interface IRequest {
   provider_id: string;
@@ -17,6 +18,9 @@ export default class ListProviderAppointmentsService {
   constructor(
     @inject('AppointmentsRepository')
     private appointmentsRepository: IAppointmentsRepository,
+
+    @inject('CacheProvider')
+    private cacheProvider: ICacheProvider,
   ) {}
 
   public async execute({
@@ -25,9 +29,13 @@ export default class ListProviderAppointmentsService {
     month,
     year,
   }: IRequest): Promise<Appointment[]> {
+    // const cacheData = await this.cacheProvider.recover('oi');
+
     const appointments = await this.appointmentsRepository.findAllByDailyAvailability(
       { provider_id, day, month, year },
     );
+
+    // await this.cacheProvider.save('oi', 'oi');
 
     return appointments;
   }

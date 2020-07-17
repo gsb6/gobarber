@@ -1,7 +1,7 @@
 import FakeUsersRepository from '../repositories/fakes/Users';
 import FakeUsersTokensRepository from '../repositories/fakes/UsersTokens';
 
-import FakeMailProvider from '@shared/providers/mail/fakes/FakeMailProvider';
+import FakeMailProvider from '@shared/container/providers/Mail/fakes/FakeMailProvider';
 
 import RecoverPasswordEmailService from './RecoverPasswordEmail';
 import AppError from '@shared/errors/AppError';
