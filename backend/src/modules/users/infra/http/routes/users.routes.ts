@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
+import { celebrate, Segments, Joi } from 'celebrate';
 
 import uploadConfig from '@config/upload';
 
@@ -7,7 +8,6 @@ import UsersController from '../controllers/Users';
 import AvatarController from '../controllers/Avatar';
 
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
-import { celebrate, Segments, Joi } from 'celebrate';
 
 const usersRouter = Router();
 const upload = multer(uploadConfig.multer);

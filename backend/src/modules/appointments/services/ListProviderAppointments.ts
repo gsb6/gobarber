@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { injectable, inject } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import Appointment from '../infra/typeorm/entities/Appointment';
 
@@ -40,12 +41,12 @@ export default class ListProviderAppointmentsService {
         { provider_id, day, month, year },
       );
 
-      await this.cacheProvider.save(cacheKey, appointments);
+      await this.cacheProvider.save(cacheKey, classToClass(appointments));
 
       return appointments;
     }
 
-    await this.cacheProvider.save(cacheKey, cachedAppointments);
+    await this.cacheProvider.save(cacheKey, classToClass(cachedAppointments));
 
     return cachedAppointments;
   }
