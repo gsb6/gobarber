@@ -2,7 +2,9 @@ import React, { ButtonHTMLAttributes } from 'react';
 
 import { Container } from './styles';
 
-type Props = ButtonHTMLAttributes<HTMLButtonElement>;
+type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
+  loading?: boolean;
+};
 
 const Button: React.FC<Props> = ({ children, ...rest }) => {
   return (

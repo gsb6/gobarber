@@ -53,10 +53,12 @@ class RecoverPasswordEmailService {
         file: forgotPasswordTemplate,
         variables: {
           name: user.name,
-          link: `${process.env.APP_WEB_URL}/reset_password?token=${newToken}`,
+          link: `${process.env.APP_WEB_URL}/reset-password?token=${newToken}`,
         },
       },
     });
+
+    console.log('token for reset password:', newToken);
   }
 }
 
