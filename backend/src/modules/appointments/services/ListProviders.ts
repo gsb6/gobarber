@@ -5,6 +5,7 @@ import User from '@modules/users/infra/typeorm/entities/User';
 
 import IUsersRepository from '@modules/users/repositories/IUsers';
 import ICacheProvider from '@shared/container/providers/Cache/models/ICacheProvider';
+import { classToClass } from 'class-transformer';
 
 interface IRequest {
   user_id: string;
@@ -25,18 +26,16 @@ export default class ListProvidersService {
 
     const cachedUsers = await this.cacheProvider.recover<User[]>(key);
 
-    if (!cachedUsers) {
-      const users = await this.usersRepository.findAllProviders({
-        except: user_id,
-      });
-
-      await this.cacheProvider.save(key, users);
-
-      return users;
+    if (cachedUsers) {
+      return cachedUsers;
     }
 
-    await this.cacheProvider.save(key, cachedUsers);
+    const users = await this.usersRepository.findAllProviders({
+      except: user_id,
+    });
 
-    return cachedUsers;
+    await this.cacheProvider.save(key, classToClass(users));
+
+    return users;
   }
 }

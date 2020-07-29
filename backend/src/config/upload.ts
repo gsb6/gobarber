@@ -25,7 +25,7 @@ export default {
   driver: process.env.STORAGE_DRIVER,
   multer: {
     storage: multer.diskStorage({
-      destination: tmpFolder,
+      destination: path.resolve(tmpFolder, 'uploads'),
       filename(request, file, callback) {
         const fileHash = crypto.randomBytes(10).toString('HEX');
         const fileName = `${fileHash}-${file.originalname}`;
