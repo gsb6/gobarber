@@ -60,6 +60,8 @@ const SignIn: React.FC = () => {
           formRef.current?.setErrors(errors);
         }
 
+        console.log(e);
+
         Alert.alert(
           'Erro na autenticação',
           'Ocorreu um erro ao fazer login, chegue as credenciais.',
